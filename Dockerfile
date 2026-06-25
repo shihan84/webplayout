@@ -1,51 +1,28 @@
-FROM debian:bookworm-slim
+FROM alpine:latest
 
-# Install dependencies including Rust and Node.js for building ffplayout
-RUN apt-get update && apt-get install -y \
-    wget \
-    curl \
-    ffmpeg \
-    pkg-config \
-    libssl-dev \
-    build-essential \
-    git \
-    ca-certificates \
-    gnupg \
-    libzmq3-dev \
-    && rm -rf /var/lib/apt/lists/*
+ARG FFPLAYOUT_VERSION=1.1.0
 
-# Install Node.js 20 from NodeSource
-RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
-    apt-get install -y nodejs && \
-    rm -rf /var/lib/apt/lists/*
+ENV DB=/db
 
-# Install Rust
-RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-ENV PATH="/root/.cargo/bin:${PATH}"
+# Install dependencies
+RUN apk update && \
+    apk upgrade && \
+    apk add --no-cache ffmpeg sqlite font-dejavu curl && \
+    mkdir ${DB}
 
-# Create ffplayout user
-RUN useradd -r -s /bin/false ffpu
+# Download ffplayout release
+RUN wget -q "https://github.com/ffplayout/ffplayout/releases/download/v${FFPLAYOUT_VERSION}/ffplayout-v${FFPLAYOUT_VERSION}_x86_64-unknown-linux-musl.tar.gz" -P /tmp/ && \
+    cd /tmp && \
+    tar xf "ffplayout-v${FFPLAYOUT_VERSION}_x86_64-unknown-linux-musl.tar.gz" && \
+    cp ffplayout /usr/bin/ && \
+    mkdir -p /usr/share/ffplayout/ && \
+    cp assets/dummy.vtt assets/logo.png assets/DejaVuSans.ttf assets/FONT_LICENSE.txt /usr/share/ffplayout/ 2>/dev/null || true && \
+    rm -rf /tmp/*
 
-# Clone and build ffplayout from source
-RUN git clone https://github.com/ffplayout/ffplayout.git /tmp/ffplayout && \
-    cd /tmp/ffplayout && \
-    cargo build --release && \
-    cp target/release/ffplayout /usr/local/bin/ && \
-    rm -rf /tmp/ffplayout
+# Copy entrypoint script
+COPY entrypoint.sh /run.sh
+RUN chmod +x /run.sh
 
-# Create necessary directories
-RUN mkdir -p /etc/ffplayout /var/log/ffplayout /usr/share/ffplayout/public /tv-media /playlists
-
-# Set ownership
-RUN chown -R ffpu:ffpu /etc/ffplayout /var/log/ffplayout /usr/share/ffplayout /tv-media /playlists
-
-# Copy public assets (if available)
-COPY public/ /usr/share/ffplayout/public/
-
-# Expose ports
 EXPOSE 8787
 
-# Switch to ffplayout user
-USER ffpu
-
-CMD ["ffplayout"]
+CMD ["/run.sh"]

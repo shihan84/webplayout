@@ -11,11 +11,11 @@ services:
     ports:
       - "8787:8787"  # Web UI
     volumes:
-      - ./config/channel1:/etc/ffplayout
+      - ./db/channel1:/db
       - ./media/channel1:/tv-media
       - ./playlists/channel1:/playlists
-      - ./logs/channel1:/var/log/ffplayout
-      - ./public:/usr/share/ffplayout/public
+      - ./public:/public
+      - ./logs/channel1:/logging
     environment:
       - TZ=UTC
     networks:
@@ -31,11 +31,11 @@ services:
     ports:
       - "8788:8787"  # Web UI
     volumes:
-      - ./config/channel2:/etc/ffplayout
+      - ./db/channel2:/db
       - ./media/channel2:/tv-media
       - ./playlists/channel2:/playlists
-      - ./logs/channel2:/var/log/ffplayout
-      - ./public:/usr/share/ffplayout/public
+      - ./public:/public
+      - ./logs/channel2:/logging
     environment:
       - TZ=UTC
     networks:
@@ -51,11 +51,11 @@ services:
     ports:
       - "8789:8787"  # Web UI
     volumes:
-      - ./config/channel3:/etc/ffplayout
+      - ./db/channel3:/db
       - ./media/channel3:/tv-media
       - ./playlists/channel3:/playlists
-      - ./logs/channel3:/var/log/ffplayout
-      - ./public:/usr/share/ffplayout/public
+      - ./public:/public
+      - ./logs/channel3:/logging
     environment:
       - TZ=UTC
     networks:
