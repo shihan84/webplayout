@@ -5,12 +5,14 @@ RUN apt-get update && apt-get install -y \
     wget \
     curl \
     ffmpeg \
+    ffprobe \
     pkg-config \
     libssl-dev \
     build-essential \
     git \
     ca-certificates \
     gnupg \
+    libzmq3-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Node.js 20 from NodeSource
