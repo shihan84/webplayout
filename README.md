@@ -20,8 +20,7 @@ A Docker-based multi-channel playout system using ffplayout for 24/7 broadcastin
 ### Software Requirements
 - Docker Engine 20.10+
 - Docker Compose 2.0+
-- FFmpeg v5.0+ (included in Docker image)
-- FFprobe (included in Docker image)
+- FFmpeg v5.0+ (included in Docker image, includes ffprobe)
 - For dynamic text overlay: FFmpeg with libzmq support (included in Docker image)
 - For WebVTT subtitles: FFmpeg v7.2+ (check your Debian version)
 - External media server with RTMP publishing point support
