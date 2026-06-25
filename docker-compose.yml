@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+  # Channel 1 - Main Channel
+  ffplayout-channel1:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ffplayout-channel1
+    restart: unless-stopped
+    ports:
+      - "8787:8787"  # Web UI
+    volumes:
+      - ./config/channel1:/etc/ffplayout
+      - ./media/channel1:/tv-media
+      - ./playlists/channel1:/playlists
+      - ./logs/channel1:/var/log/ffplayout
+      - ./public:/usr/share/ffplayout/public
+    environment:
+      - TZ=UTC
+    networks:
+      - playout-network
+
+  # Channel 2 - Secondary Channel
+  ffplayout-channel2:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ffplayout-channel2
+    restart: unless-stopped
+    ports:
+      - "8788:8787"  # Web UI
+    volumes:
+      - ./config/channel2:/etc/ffplayout
+      - ./media/channel2:/tv-media
+      - ./playlists/channel2:/playlists
+      - ./logs/channel2:/var/log/ffplayout
+      - ./public:/usr/share/ffplayout/public
+    environment:
+      - TZ=UTC
+    networks:
+      - playout-network
+
+  # Channel 3 - Tertiary Channel (optional)
+  ffplayout-channel3:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ffplayout-channel3
+    restart: unless-stopped
+    ports:
+      - "8789:8787"  # Web UI
+    volumes:
+      - ./config/channel3:/etc/ffplayout
+      - ./media/channel3:/tv-media
+      - ./playlists/channel3:/playlists
+      - ./logs/channel3:/var/log/ffplayout
+      - ./public:/usr/share/ffplayout/public
+    environment:
+      - TZ=UTC
+    networks:
+      - playout-network
+
+networks:
+  playout-network:
+    driver: bridge

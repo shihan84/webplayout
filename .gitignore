@@ -1,0 +1,24 @@
+# Media files
+media/
+playlists/*.json
+!playlists/*_example.json
+
+# Logs
+logs/
+
+# HLS output (if using local nginx)
+# nginx/hls/
+
+# Docker volumes
+# config/*/ffplayout.yml
+# !config/*/ffplayout.yml.example
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo

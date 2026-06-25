@@ -1,0 +1,67 @@
+general:
+  stop_threshold: 120
+  mail_subject: "Playout Error"
+  mail_recipient: ""
+  mail_level: "WARNING"
+  mail_interval: 60
+  ingest_interval: 60
+  storage:
+    path: "/tv-media"
+    extensions:
+      - ".mp4"
+      - ".mkv"
+      - ".webm"
+    filler: "/tv-media/filler"
+    filler_duration: 25
+    extensions:
+      - ".mp4"
+      - ".mkv"
+      - ".webm"
+  logging:
+    ffmpeg_level: "error"
+    ffplayout_level: "info"
+    ingest_level: "warning"
+  playlist:
+    path: "/playlists"
+    day_start: "05:59:00"
+    length: "24:00:00"
+    infinit: true
+
+rpc:
+  enable: true
+  address: "127.0.0.1"
+  port: 7071
+  authorization: "av6k7mV-2dZS4-T3dHs_2r4td6B3eC5j"
+
+server:
+  preview: true
+  audio_only: false
+  audio_track_index: -1
+  copy_audio: false
+  copy_video: false
+  stream_copy: false
+  ignore: 0
+
+processing:
+  mode: "playlist"
+  audio_track_index: -1
+  copy_audio: false
+  copy_video: false
+  width: 1280
+  height: 720
+  aspect: 16.0/9.0
+  fps: 30
+  add_logo: false
+  logo: "/tv-media/logo.png"
+  logo_opacity: 0.7
+  logo_position: "top-right"
+  audio_only: false
+  audio_track_index: -1
+  copy_audio: false
+  copy_video: false
+  stream_copy: false
+  custom_filter: ""
+
+output:
+  mode: "stream"
+  output_param: "-c:v libx264 -crf 23 -x264-params keyint=50:min-keyint=25:scenecut=-1 -maxrate 1300k -bufsize 2600k -preset faster -tune zerolatency -profile:v Main -level 3.1 -c:a aac -ar 44100 -b:a 128k -flags +cgop -flags +global_header -f flv rtmp://YOUR_MEDIA_SERVER/publishing_point_channel2"

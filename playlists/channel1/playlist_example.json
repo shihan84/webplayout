@@ -1,0 +1,39 @@
+{
+  "channel": "Channel 1",
+  "date": "2024-01-01",
+  "program": [
+    {
+      "in": 0,
+      "out": 647.68,
+      "duration": 647.68,
+      "source": "/tv-media/clip1.mp4"
+    },
+    {
+      "in": 0,
+      "out": 890.02,
+      "duration": 890.02,
+      "source": "/tv-media/clip2.mp4",
+      "custom_filter": "eq=gamma_b=0.6:gamma_g=0.7[c_v_out]"
+    },
+    {
+      "in": 0,
+      "out": 149,
+      "duration": 149,
+      "source": "/tv-media/clip3.mp4",
+      "category": "advertisement"
+    },
+    {
+      "in": 0,
+      "out": 114.72,
+      "duration": 114.72,
+      "source": "/tv-media/image1.jpg"
+    },
+    {
+      "in": 0,
+      "out": 230.30,
+      "duration": 230.30,
+      "source": "/tv-media/image2.jpg",
+      "audio": "/tv-media/audio1.mp3"
+    }
+  ]
+}
